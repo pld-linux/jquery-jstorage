@@ -5,12 +5,12 @@
 %define		plugin	jstorage
 Summary:	jStorage - store data locally with JavaScript
 Name:		jquery-%{plugin}
-Version:	0.1.4.1
+Version:	0.1.6.0
 Release:	1
 License:	MIT
 Group:		Applications/WWW
-Source0:	http://github.com/andris9/jStorage/tarball/master#/%{plugin}-%{version}.tgz
-# Source0-md5:	6a75f6418e39cce47b8c91d53e3d8338
+Source0:	http://github.com/andris9/jStorage/tarball/master/%{plugin}-%{version}.tgz
+# Source0-md5:	8bf7e6df958a63299ea9ea5b6349dd36
 URL:		http://www.jstorage.info/
 BuildRequires:	rpmbuild(macros) >= 1.268
 Requires:	jquery
@@ -35,10 +35,14 @@ go.
 %setup -qc
 mv *-jStorage-*/* .
 
+grep '"%{version}"' jstorage.js
+
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_appdir}
-cp -a jstorage.min.js $RPM_BUILD_ROOT%{_appdir}/jstorage.js
+cp -p %{plugin}.min.js $RPM_BUILD_ROOT%{_appdir}/%{plugin}-%{version}.min.js
+cp -p %{plugin}.js $RPM_BUILD_ROOT%{_appdir}/%{plugin}-%{version}.js
+ln -s %{plugin}-%{version}.min.js $RPM_BUILD_ROOT%{_appdir}/%{plugin}.js
 
 %clean
 rm -rf $RPM_BUILD_ROOT
