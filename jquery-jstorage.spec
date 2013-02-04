@@ -5,12 +5,12 @@
 %define		plugin	jstorage
 Summary:	jStorage - store data locally with JavaScript
 Name:		jquery-%{plugin}
-Version:	0.1.6.0
+Version:	0.3.2
 Release:	1
 License:	MIT
 Group:		Applications/WWW
-Source0:	http://github.com/andris9/jStorage/tarball/master/%{plugin}-%{version}.tgz
-# Source0-md5:	8bf7e6df958a63299ea9ea5b6349dd36
+Source0:	https://github.com/andris9/jStorage/archive/v%{version}.tar.gz?/%{plugin}-%{version}.tgz
+# Source0-md5:	4f13636646ad69100cb8183d978b288f
 URL:		http://www.jstorage.info/
 BuildRequires:	rpmbuild(macros) >= 1.268
 Requires:	jquery
@@ -32,8 +32,7 @@ working with Prototype and jQuery but jStorage can handle both in one
 go.
 
 %prep
-%setup -qc
-mv *-jStorage-*/* .
+%setup -qn jStorage-%{version}
 
 grep '"%{version}"' jstorage.js
 
@@ -43,11 +42,13 @@ install -d $RPM_BUILD_ROOT%{_appdir}
 cp -p %{plugin}.min.js $RPM_BUILD_ROOT%{_appdir}/%{plugin}-%{version}.min.js
 cp -p %{plugin}.js $RPM_BUILD_ROOT%{_appdir}/%{plugin}-%{version}.js
 ln -s %{plugin}-%{version}.min.js $RPM_BUILD_ROOT%{_appdir}/%{plugin}.js
+ln -s %{plugin}-%{version}.min.js $RPM_BUILD_ROOT%{_appdir}/%{plugin}.min.js
+ln -s %{plugin}-%{version}.js $RPM_BUILD_ROOT%{_appdir}/%{plugin}.src.js
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc README test.html
+%doc README.md test.html
 %{_appdir}
